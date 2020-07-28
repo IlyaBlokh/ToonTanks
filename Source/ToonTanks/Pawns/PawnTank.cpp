@@ -20,7 +20,6 @@ APawnTank::APawnTank()
 void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void APawnTank::CalculateMoveInput(float Value)

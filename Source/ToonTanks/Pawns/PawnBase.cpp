@@ -24,3 +24,14 @@ APawnBase::APawnBase()
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 }
 
+void APawnBase::RotateTurret(FVector LookAtTarget)
+{
+}
+
+void APawnBase::Fire()
+{
+}
+
+void APawnBase::HandleDestruction()
+{
+}

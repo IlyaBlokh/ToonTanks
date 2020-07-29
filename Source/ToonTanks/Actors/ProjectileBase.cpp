@@ -1,5 +1,6 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "ProjectileBase.h"
 
 // Sets default values
@@ -9,16 +10,35 @@ AProjectileBase::AProjectileBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 	RootComponent = ProjectileMesh;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->InitialSpeed = MovementSpeed;
 	ProjectileMovement->MaxSpeed = MovementSpeed;
-	InitialLifeSpan = LifeSpan;
 }
 
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Projectile Spawned, Speed = %f, LifeSpan = %f"), ProjectileMovement->InitialSpeed, InitialLifeSpan);
+	SetLifeSpan(LifeSpan);
+	//UE_LOG(LogTemp, Warning, TEXT("Projectile Spawned, Speed = %f, LifeSpan = %f"), ProjectileMovement->InitialSpeed, InitialLifeSpan);
+}
+
+void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Error, TEXT("On Hit"));
+	AActor* MyOwner = GetOwner();
+	if (!MyOwner){
+		UE_LOG(LogTemp, Error, TEXT("doesn't have owner"));
+		return;
+	}
+	if (OtherActor && OtherActor != this && OtherActor != MyOwner) {
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this, DamageType);
+		UE_LOG(LogTemp, Error, TEXT("Damage applied"));
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("OtherActor problem"));
+	}
+	Destroy();
 }

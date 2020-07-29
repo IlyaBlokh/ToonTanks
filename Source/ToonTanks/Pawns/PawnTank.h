@@ -27,11 +27,13 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	//COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* Camera;
 
+	//VARIABLES
 	FVector MoveDirection;
 	FQuat RotationDirection;
 	APlayerController* PlayerControllerRef;
@@ -41,11 +43,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotateSpeed = 100.f;
 
+	//FUNCTIONS
 	void CalculateMoveInput(float Value);
 	void CalculateRotateInput(float Value);
-
 	void Move();
 	void Rotate();
-
 	virtual void HandleDestruction() override;
 };

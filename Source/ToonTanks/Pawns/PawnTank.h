@@ -34,6 +34,7 @@ private:
 
 	FVector MoveDirection;
 	FQuat RotationDirection;
+	APlayerController* PlayerControllerRef;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.f;
@@ -45,4 +46,6 @@ private:
 
 	void Move();
 	void Rotate();
+
+	virtual void HandleDestruction() override;
 };

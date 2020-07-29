@@ -31,4 +31,5 @@ private:
 
 	void CheckFireCondition();
 	float GetDistanceToPlayer();
+	virtual void HandleDestruction() override;
 };

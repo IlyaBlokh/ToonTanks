@@ -29,18 +29,16 @@ void AProjectileBase::BeginPlay()
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Error, TEXT("On Hit"));
 	AActor* MyOwner = GetOwner();
 	if (!MyOwner){
-		UE_LOG(LogTemp, Error, TEXT("doesn't have owner"));
+		UE_LOG(LogTemp, Error, TEXT("Projectile doesn't have owner"));
 		return;
 	}
 	if (OtherActor && OtherActor != this && OtherActor != MyOwner) {
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this, DamageType);
-		UE_LOG(LogTemp, Error, TEXT("Damage applied"));
 	}
 	else {
-		UE_LOG(LogTemp, Error, TEXT("OtherActor problem"));
+		UE_LOG(LogTemp, Error, TEXT("Projectile onHit: OtherActor problem"));
 	}
 	Destroy();
 }

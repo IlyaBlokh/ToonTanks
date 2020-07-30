@@ -10,7 +10,7 @@ AProjectileBase::AProjectileBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
+	
 	RootComponent = ProjectileMesh;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
@@ -22,6 +22,7 @@ void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
 	SetLifeSpan(LifeSpan);
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
 	//UE_LOG(LogTemp, Warning, TEXT("Projectile Spawned, Speed = %f, LifeSpan = %f"), ProjectileMovement->InitialSpeed, InitialLifeSpan);
 }
 

@@ -22,9 +22,6 @@ AProjectileBase::AProjectileBase()
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
-	//SetLifeSpan(LifeSpan);
-	
-	//UE_LOG(LogTemp, Warning, TEXT("Projectile Spawned, Speed = %f, LifeSpan = %f"), ProjectileMovement->InitialSpeed, InitialLifeSpan);
 }
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

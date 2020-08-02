@@ -32,6 +32,8 @@ private:
 	TSubclassOf<AProjectileBase> ProjectileClass;
 	UPROPERTY(EditAnywhere, Category = "Effects")
 	UParticleSystem* DeathEffect;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase* DeathSound;
 protected:
 	void RotateTurret(FVector LookAtTarget);
 	void Fire();

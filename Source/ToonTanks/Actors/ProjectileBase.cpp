@@ -41,6 +41,7 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this, DamageType);
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitEffect, GetActorLocation());
 		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(HitShake);
 		Destroy();
 	}
 	else {

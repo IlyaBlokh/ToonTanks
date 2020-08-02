@@ -12,7 +12,7 @@ void APawnTurret::BeginPlay()
 
 void APawnTurret::CheckFireCondition()
 {
-	if (!PlayerPawn || GetDistanceToPlayer() > FireRange)
+	if (!PlayerPawn || !PlayerPawn->GetIsPlayerAlive() || GetDistanceToPlayer() > FireRange)
 		return;
 	Fire();
 }

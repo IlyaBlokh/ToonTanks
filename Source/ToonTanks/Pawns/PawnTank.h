@@ -24,6 +24,8 @@ public:
 
 	virtual void HandleDestruction() override;
 
+	bool GetIsPlayerAlive();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -39,6 +41,7 @@ private:
 	FVector MoveDirection;
 	FQuat RotationDirection;
 	APlayerController* PlayerControllerRef;
+	bool bIsPlayerAlive = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.f;

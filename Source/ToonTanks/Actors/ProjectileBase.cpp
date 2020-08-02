@@ -1,6 +1,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "ProjectileBase.h"
 
 // Sets default values
@@ -16,6 +17,10 @@ AProjectileBase::AProjectileBase()
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->InitialSpeed = MovementSpeed;
 	ProjectileMovement->MaxSpeed = MovementSpeed;
+
+	TrailEffectComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Trail Particle Effect"));
+	TrailEffectComponent->SetupAttachment(RootComponent);
+
 	InitialLifeSpan = LifeSpan;
 }
 
@@ -33,9 +38,10 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UP
 	}
 	if (OtherActor && OtherActor != this && OtherActor != MyOwner) {
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this, DamageType);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitEffect, GetActorLocation());
+		Destroy();
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Projectile onHit: OtherActor problem"));
 	}
-	Destroy();
 }

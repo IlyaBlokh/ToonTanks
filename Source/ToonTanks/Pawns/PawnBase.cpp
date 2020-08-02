@@ -1,8 +1,10 @@
 // Copyright Ilya Blokh
 #include "ToonTanks/Actors/ProjectileBase.h"
+#include "ToonTanks/Components/HealthComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 #include "PawnBase.h"
 
 // Sets default values
@@ -22,6 +24,8 @@ APawnBase::APawnBase()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+
+	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
 
 void APawnBase::RotateTurret(FVector LookAtTarget)
@@ -45,5 +49,5 @@ void APawnBase::Fire()
 
 void APawnBase::HandleDestruction()
 {
-	
+	UGameplayStatics::SpawnEmitterAtLocation(this, DeathEffect, GetActorLocation());
 }
